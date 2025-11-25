@@ -3,12 +3,13 @@ package instance
 import (
 	"fmt"
 
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/waf/v20180125"
 
 	"github.com/tencentyun/tencentcloud-exporter/pkg/client"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 )
 
@@ -93,7 +94,7 @@ getMoreInstances:
 	return
 }
 
-func NewWafTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewWafTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewWafClient(cred, c)
 	if err != nil {
 		return

@@ -2,9 +2,11 @@ package collector
 
 import (
 	"fmt"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/instance"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
@@ -178,7 +180,7 @@ func (h *ClbPrivateHandler) getClbPrivateSeries(m *metric.TcmMetric, ins instanc
 	return series, nil
 }
 
-func NewClbPrivateHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewClbPrivateHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	handler = &ClbPrivateHandler{
 		baseProductHandler{
 			monitorQueryKey: ClbPrivateInstanceidKey,

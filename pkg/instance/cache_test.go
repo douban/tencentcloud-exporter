@@ -1,9 +1,10 @@
 package instance
 
 import (
-	"github.com/prometheus/common/promlog"
 	"testing"
 	"time"
+
+	"github.com/prometheus/common/promlog"
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"

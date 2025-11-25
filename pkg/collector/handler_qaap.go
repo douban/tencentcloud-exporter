@@ -2,15 +2,18 @@ package collector
 
 import (
 	"fmt"
-	"github.com/go-kit/log"
-	"github.com/go-kit/log/level"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/instance"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/go-kit/log"
+	"github.com/go-kit/log/level"
+	"github.com/tencentyun/tencentcloud-exporter/pkg/instance"
+	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
+	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
 )
 
 const (
@@ -399,7 +402,7 @@ func (h *QaapHandler) getRuleRsSeries(m *metric.TcmMetric, ins instance.TcInstan
 	return series, nil
 }
 
-func NewQaapHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewQaapHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	qaapInstanceInfo, err := instance.NewQaapTcInstanceInfoRepository(cred, c.Conf, logger)
 	if err != nil {
 		return nil, err

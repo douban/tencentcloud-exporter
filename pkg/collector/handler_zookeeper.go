@@ -1,13 +1,15 @@
 package collector
 
 import (
+	"fmt"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 
-	"fmt"
 	"time"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/instance"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
@@ -195,7 +197,7 @@ func (h *ZookeeperHandler) getInterfaceSeries(m *metric.TcmMetric, ins instance.
 	return series, nil
 }
 
-func NewZookeeperHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewZookeeperHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	podRepo, err := instance.NewZookeeperTcInstancePodRepository(cred, c.Conf, logger)
 	if err != nil {
 		return nil, err

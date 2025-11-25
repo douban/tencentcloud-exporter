@@ -2,9 +2,11 @@ package instance
 
 import (
 	"fmt"
-	dts "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dts/v20180330"
+
 	"sync"
 	"time"
+
+	dts "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dts/v20180330"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"

@@ -2,7 +2,7 @@ package collector
 
 import (
 	"github.com/go-kit/log"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 )
 
 const (
@@ -21,7 +21,7 @@ type pgHandler struct {
 func (h *pgHandler) GetNamespace() string {
 	return MariaDBNamespace
 }
-func NewPGHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewPGHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	handler = &pgHandler{
 		baseProductHandler{
 			monitorQueryKey: PGDBInstanceIDKey,

@@ -3,13 +3,14 @@ package instance
 import (
 	"fmt"
 
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/vpc/v20170312"
 
 	tccommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/client"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 )
 
@@ -82,7 +83,7 @@ getMoreInstances:
 	return
 }
 
-func NewVbcTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewVbcTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewVpvClient(cred, c)
 	if err != nil {
 		return
@@ -109,7 +110,7 @@ func (repo *VbcTcInstanceDRegionRepositoryImpl) GetVbcDRegionInfo(instanceId str
 	req.CcnId = tccommon.StringPtr(instanceId)
 	return repo.client.DescribeCcnRegionBandwidthLimits(req)
 }
-func NewVbcTcInstanceDRegionRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (VbcTcInstanceDRegionRepository, error) {
+func NewVbcTcInstanceDRegionRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (VbcTcInstanceDRegionRepository, error) {
 	cli, err := client.NewVpvClient(cred, c)
 	if err != nil {
 		return nil, err

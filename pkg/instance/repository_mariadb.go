@@ -3,7 +3,7 @@ package instance
 import (
 	"fmt"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -17,7 +17,7 @@ func init() {
 }
 
 type MariaDBTcInstanceRepository struct {
-	credential common.CredentialIface
+	credential apiCommon.CredentialIface
 	client     *sdk.Client
 	logger     log.Logger
 }
@@ -81,7 +81,7 @@ getMoreInstances:
 	return
 }
 
-func NewMariaDBTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewMariaDBTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewMariaDBClient(cred, c)
 	if err != nil {
 		return

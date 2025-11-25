@@ -3,6 +3,9 @@ package instance
 import (
 	"encoding/json"
 	"fmt"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	tchttp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http"
@@ -10,7 +13,6 @@ import (
 
 	selfcommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/client"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 )
 
@@ -83,7 +85,7 @@ getMoreInstances:
 	return
 }
 
-func NewQaapTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewQaapTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewGAAPClient(cred, c)
 	if err != nil {
 		return
@@ -136,7 +138,7 @@ func (repo *QaapTcInstanceInfoRepositoryImpl) GetTCPListenersInfo(instanceId str
 	return repo.client.DescribeTCPListeners(req)
 }
 
-func NewQaapTcInstanceInfoRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (QaapTcInstanceInfoRepository, error) {
+func NewQaapTcInstanceInfoRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (QaapTcInstanceInfoRepository, error) {
 	cli, err := client.NewGAAPClient(cred, c)
 	if err != nil {
 		return nil, err
@@ -255,7 +257,7 @@ func (repo *CommonQaapTcInstanceRepositoryImpl) GetCommonQaapNoneBgpIpList(insta
 	return noneBgpIpListRsp, nil
 }
 
-func NewCommonQaapTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (CommonQaapTcInstanceRepository, error) {
+func NewCommonQaapTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (CommonQaapTcInstanceRepository, error) {
 	cli := client.NewGAAPCommonClient(cred, c)
 	repo := &CommonQaapTcInstanceRepositoryImpl{
 		client: cli,

@@ -2,9 +2,10 @@ package instance
 
 import (
 	"fmt"
-	"strconv"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
+	"strconv"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -18,7 +19,7 @@ func init() {
 }
 
 type MongoTcInstanceRepository struct {
-	credential common.CredentialIface
+	credential apiCommon.CredentialIface
 	client     *sdk.Client
 	logger     log.Logger
 }
@@ -94,7 +95,7 @@ getMoreInstances:
 	return
 }
 
-func NewMongoTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewMongoTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewMongodbClient(cred, c)
 	if err != nil {
 		return

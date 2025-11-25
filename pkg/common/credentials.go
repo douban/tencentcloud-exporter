@@ -11,14 +11,6 @@ import (
 	"github.com/tencentyun/cos-go-sdk-v5"
 )
 
-type CredentialIface interface {
-	GetSecretId() string
-	GetToken() string
-	GetSecretKey() string
-	Refresh() error
-	GetRole() string
-}
-
 type Credential struct {
 	rwLocker    sync.RWMutex
 	Transport   http.RoundTripper

@@ -2,12 +2,14 @@ package collector
 
 import (
 	"fmt"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"strings"
 	"time"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/instance"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
@@ -205,7 +207,7 @@ func (h *tdmqHandler) getNamespaceSeries(m *metric.TcmMetric, ins instance.TcIns
 	return series, nil
 }
 
-func NewTdmqHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewTdmqHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	namespaceRepo, err := instance.NewTdmqTcInstanceRocketMQNameSpacesRepository(cred, c.Conf, logger)
 	if err != nil {
 		return nil, err

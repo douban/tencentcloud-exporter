@@ -3,7 +3,7 @@ package instance
 import (
 	"fmt"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -17,7 +17,7 @@ func init() {
 }
 
 type NatTcInstanceRepository struct {
-	credential common.CredentialIface
+	credential apiCommon.CredentialIface
 	client     *sdk.Client
 	logger     log.Logger
 }
@@ -80,7 +80,7 @@ getMoreInstances:
 	return
 }
 
-func NewNatTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewNatTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewVpvClient(cred, c)
 	if err != nil {
 		return

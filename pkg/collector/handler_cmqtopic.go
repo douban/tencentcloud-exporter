@@ -2,7 +2,7 @@ package collector
 
 import (
 	"github.com/go-kit/log"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 )
 
 const (
@@ -21,7 +21,7 @@ type cmqTopicHandler struct {
 func (h *cmqTopicHandler) GetNamespace() string {
 	return CMQTopicNamespace
 }
-func NewCMQTopicHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewCMQTopicHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	handler = &cmqTopicHandler{
 		baseProductHandler{
 			monitorQueryKey: CMQTopicInstanceIDKey,

@@ -34,15 +34,15 @@ import (
 	redis "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/redis/v20180412"
 	sqlserver "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sqlserver/v20180328"
 	tdmq "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tdmq/v20200217"
+	teo "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/teo/v20220901"
 	tse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tse/v20201207"
 	vpc "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/vpc/v20170312"
 	waf "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/waf/v20180125"
 	cos "github.com/tencentyun/cos-go-sdk-v5"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 )
 
-func NewMonitorClient(cred common.CredentialIface, conf *config.TencentConfig, region string) (*monitor.Client, error) {
+func NewMonitorClient(cred apiCommon.CredentialIface, conf *config.TencentConfig, region string) (*monitor.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "monitor.internal.tencentcloudapi.com"
@@ -52,7 +52,7 @@ func NewMonitorClient(cred common.CredentialIface, conf *config.TencentConfig, r
 	return newClient(cred, region, cpf)
 }
 
-func newClient(credential common.CredentialIface,
+func newClient(credential apiCommon.CredentialIface,
 	region string, clientProfile *profile.ClientProfile) (client *monitor.Client, err error) {
 	client = &monitor.Client{}
 	transport := &http.Transport{
@@ -74,7 +74,7 @@ func newClient(credential common.CredentialIface,
 	return
 }
 
-func NewMongodbClient(cred common.CredentialIface, conf *config.TencentConfig) (*mongodb.Client, error) {
+func NewMongodbClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*mongodb.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "mongodb.internal.tencentcloudapi.com"
@@ -84,7 +84,7 @@ func NewMongodbClient(cred common.CredentialIface, conf *config.TencentConfig) (
 	return mongodb.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewCdbClient(cred common.CredentialIface, conf *config.TencentConfig) (*cdb.Client, error) {
+func NewCdbClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*cdb.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "cdb.internal.tencentcloudapi.com"
@@ -94,7 +94,7 @@ func NewCdbClient(cred common.CredentialIface, conf *config.TencentConfig) (*cdb
 	return cdb.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewCvmClient(cred common.CredentialIface, conf *config.TencentConfig) (*cvm.Client, error) {
+func NewCvmClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*cvm.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "cvm.internal.tencentcloudapi.com"
@@ -104,7 +104,7 @@ func NewCvmClient(cred common.CredentialIface, conf *config.TencentConfig) (*cvm
 	return cvm.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewRedisClient(cred common.CredentialIface, conf *config.TencentConfig) (*redis.Client, error) {
+func NewRedisClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*redis.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "redis.internal.tencentcloudapi.com"
@@ -114,7 +114,7 @@ func NewRedisClient(cred common.CredentialIface, conf *config.TencentConfig) (*r
 	return redis.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewDcClient(cred common.CredentialIface, conf *config.TencentConfig) (*dc.Client, error) {
+func NewDcClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*dc.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "dc.internal.tencentcloudapi.com"
@@ -124,7 +124,7 @@ func NewDcClient(cred common.CredentialIface, conf *config.TencentConfig) (*dc.C
 	return dc.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewClbClient(cred common.CredentialIface, conf *config.TencentConfig) (*clb.Client, error) {
+func NewClbClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*clb.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "clb.internal.tencentcloudapi.com"
@@ -134,7 +134,7 @@ func NewClbClient(cred common.CredentialIface, conf *config.TencentConfig) (*clb
 	return clb.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewVpvClient(cred common.CredentialIface, conf *config.TencentConfig) (*vpc.Client, error) {
+func NewVpvClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*vpc.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "vpc.internal.tencentcloudapi.com"
@@ -144,7 +144,7 @@ func NewVpvClient(cred common.CredentialIface, conf *config.TencentConfig) (*vpc
 	return vpc.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewCbsClient(cred common.CredentialIface, conf *config.TencentConfig) (*cbs.Client, error) {
+func NewCbsClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*cbs.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "cbs.internal.tencentcloudapi.com"
@@ -154,7 +154,7 @@ func NewCbsClient(cred common.CredentialIface, conf *config.TencentConfig) (*cbs
 	return cbs.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewSqlServerClient(cred common.CredentialIface, conf *config.TencentConfig) (*sqlserver.Client, error) {
+func NewSqlServerClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*sqlserver.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "sqlserver.internal.tencentcloudapi.com"
@@ -164,7 +164,7 @@ func NewSqlServerClient(cred common.CredentialIface, conf *config.TencentConfig)
 	return sqlserver.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewMariaDBClient(cred common.CredentialIface, conf *config.TencentConfig) (*mariadb.Client, error) {
+func NewMariaDBClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*mariadb.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "mariadb.internal.tencentcloudapi.com"
@@ -174,7 +174,7 @@ func NewMariaDBClient(cred common.CredentialIface, conf *config.TencentConfig) (
 	return mariadb.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewESClient(cred common.CredentialIface, conf *config.TencentConfig) (*es.Client, error) {
+func NewESClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*es.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "es.internal.tencentcloudapi.com"
@@ -184,7 +184,7 @@ func NewESClient(cred common.CredentialIface, conf *config.TencentConfig) (*es.C
 	return es.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewCMQClient(cred common.CredentialIface, conf *config.TencentConfig) (*cmq.Client, error) {
+func NewCMQClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*cmq.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "cmq.internal.tencentcloudapi.com"
@@ -194,7 +194,7 @@ func NewCMQClient(cred common.CredentialIface, conf *config.TencentConfig) (*cmq
 	return cmq.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewPGClient(cred common.CredentialIface, conf *config.TencentConfig) (*pg.Client, error) {
+func NewPGClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*pg.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "postgres.internal.tencentcloudapi.com"
@@ -204,7 +204,7 @@ func NewPGClient(cred common.CredentialIface, conf *config.TencentConfig) (*pg.C
 	return pg.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewMemcacheClient(cred common.CredentialIface, conf *config.TencentConfig) (*memcached.Client, error) {
+func NewMemcacheClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*memcached.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "memcached.internal.tencentcloudapi.com"
@@ -214,7 +214,7 @@ func NewMemcacheClient(cred common.CredentialIface, conf *config.TencentConfig) 
 	return memcached.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewLighthouseClient(cred common.CredentialIface, conf *config.TencentConfig) (*lh.Client, error) {
+func NewLighthouseClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*lh.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "lighthouse.internal.tencentcloudapi.com"
@@ -224,7 +224,7 @@ func NewLighthouseClient(cred common.CredentialIface, conf *config.TencentConfig
 	return lh.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewKafkaClient(cred common.CredentialIface, conf *config.TencentConfig) (*kafka.Client, error) {
+func NewKafkaClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*kafka.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "ckafka.internal.tencentcloudapi.com"
@@ -234,7 +234,7 @@ func NewKafkaClient(cred common.CredentialIface, conf *config.TencentConfig) (*k
 	return kafka.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewDCDBClient(cred common.CredentialIface, conf *config.TencentConfig) (*dcdb.Client, error) {
+func NewDCDBClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*dcdb.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "dcdb.internal.tencentcloudapi.com"
@@ -244,7 +244,7 @@ func NewDCDBClient(cred common.CredentialIface, conf *config.TencentConfig) (*dc
 	return dcdb.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewTDMQClient(cred common.CredentialIface, conf *config.TencentConfig) (*tdmq.Client, error) {
+func NewTDMQClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*tdmq.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "tdmq.internal.tencentcloudapi.com"
@@ -254,7 +254,7 @@ func NewTDMQClient(cred common.CredentialIface, conf *config.TencentConfig) (*td
 	return tdmq.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewTseClient(cred common.CredentialIface, conf *config.TencentConfig) (*tse.Client, error) {
+func NewTseClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*tse.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "tse.internal.tencentcloudapi.com"
@@ -264,7 +264,7 @@ func NewTseClient(cred common.CredentialIface, conf *config.TencentConfig) (*tse
 	return tse.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewCynosdbClient(cred common.CredentialIface, conf *config.TencentConfig) (*cynosdb.Client, error) {
+func NewCynosdbClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*cynosdb.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "cynosdb.internal.tencentcloudapi.com"
@@ -274,7 +274,7 @@ func NewCynosdbClient(cred common.CredentialIface, conf *config.TencentConfig) (
 	return cynosdb.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewCdnClient(cred common.CredentialIface, conf *config.TencentConfig) (*cdn.Client, error) {
+func NewCdnClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*cdn.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "cdn.internal.tencentcloudapi.com"
@@ -284,28 +284,22 @@ func NewCdnClient(cred common.CredentialIface, conf *config.TencentConfig) (*cdn
 	return cdn.NewClient(cred, "", cpf)
 }
 
-func NewCosClient(cred common.CredentialIface, conf *config.TencentConfig) (*cos.Client, error) {
+func NewCosClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*cos.Client, error) {
 	// 用于Get Service 查询, service域名暂时只支持外网
 	su, _ := url.Parse("http://cos." + conf.Credential.Region + ".myqcloud.com")
 	b := &cos.BaseURL{BucketURL: nil, ServiceURL: su}
 	client := &cos.Client{}
-	if conf.Credential.Role == "" {
-		client = cos.NewClient(b, &http.Client{
-			Transport: &cos.AuthorizationTransport{
-				SecretID:  conf.Credential.AccessKey,
-				SecretKey: conf.Credential.SecretKey,
-			},
-		})
-	} else {
-		client = cos.NewClient(b, &http.Client{
-			Transport: common.NewCredentialTransport(cred.GetRole()),
-		})
-	}
+	client = cos.NewClient(b, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  conf.Credential.AccessKey,
+			SecretKey: conf.Credential.SecretKey,
+		},
+	})
 
 	return client, nil
 }
 
-func NewDTSClient(cred common.CredentialIface, conf *config.TencentConfig) (*dts.Client, error) {
+func NewDTSClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*dts.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "dts.internal.tencentcloudapi.com"
@@ -314,7 +308,7 @@ func NewDTSClient(cred common.CredentialIface, conf *config.TencentConfig) (*dts
 	}
 	return dts.NewClient(cred, conf.Credential.Region, cpf)
 }
-func NewDTSNewClient(cred common.CredentialIface, conf *config.TencentConfig) (*dtsNew.Client, error) {
+func NewDTSNewClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*dtsNew.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "dts.internal.tencentcloudapi.com"
@@ -324,7 +318,7 @@ func NewDTSNewClient(cred common.CredentialIface, conf *config.TencentConfig) (*
 	return dtsNew.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewGAAPClient(cred common.CredentialIface, conf *config.TencentConfig) (*gaap.Client, error) {
+func NewGAAPClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*gaap.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "gaap.internal.tencentcloudapi.com"
@@ -334,7 +328,7 @@ func NewGAAPClient(cred common.CredentialIface, conf *config.TencentConfig) (*ga
 	return gaap.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewGAAPCommonClient(cred common.CredentialIface, conf *config.TencentConfig) *apiCommon.Client {
+func NewGAAPCommonClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) *apiCommon.Client {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "gaap.internal.tencentcloudapi.com"
@@ -345,7 +339,7 @@ func NewGAAPCommonClient(cred common.CredentialIface, conf *config.TencentConfig
 	return apiCommon.NewCommonClient(cred, regions.Guangzhou, cpf)
 }
 
-func NewWafClient(cred common.CredentialIface, conf *config.TencentConfig) (*waf.Client, error) {
+func NewWafClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*waf.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "waf.internal.tencentcloudapi.com"
@@ -355,7 +349,7 @@ func NewWafClient(cred common.CredentialIface, conf *config.TencentConfig) (*waf
 	return waf.NewClient(cred, conf.Credential.Region, cpf)
 }
 
-func NewCfsClient(cred common.CredentialIface, conf *config.TencentConfig) (*cfs.Client, error) {
+func NewCfsClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*cfs.Client, error) {
 	cpf := profile.NewClientProfile()
 	if conf.Credential.IsInternal == true {
 		cpf.HttpProfile.Endpoint = "cfs.internal.tencentcloudapi.com"
@@ -363,4 +357,14 @@ func NewCfsClient(cred common.CredentialIface, conf *config.TencentConfig) (*cfs
 		cpf.HttpProfile.Endpoint = "cfs.tencentcloudapi.com"
 	}
 	return cfs.NewClient(cred, conf.Credential.Region, cpf)
+}
+
+func NewEdgeOneClient(cred apiCommon.CredentialIface, conf *config.TencentConfig) (*teo.Client, error) {
+	cpf := profile.NewClientProfile()
+	if conf.Credential.IsInternal == true {
+		cpf.HttpProfile.Endpoint = "teo.internal.tencentcloudapi.com"
+	} else {
+		cpf.HttpProfile.Endpoint = "teo.tencentcloudapi.com"
+	}
+	return teo.NewClient(cred, conf.Credential.Region, cpf)
 }

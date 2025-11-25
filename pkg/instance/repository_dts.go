@@ -2,10 +2,9 @@ package instance
 
 import (
 	"fmt"
+
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
-
-	selfcommon "github.com/tencentyun/tencentcloud-exporter/pkg/common"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -104,7 +103,7 @@ func (repo *DtsTcInstanceReplicationsRepositoryImpl) GetReplicationsInfo(instanc
 	return repo.client.DescribeSyncJobs(req)
 }
 
-func NewDtsTcInstanceReplicationsRepository(cred selfcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (DtsTcInstanceReplicationsRepository, error) {
+func NewDtsTcInstanceReplicationsRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (DtsTcInstanceReplicationsRepository, error) {
 	cli, err := client.NewDTSNewClient(cred, c)
 	if err != nil {
 		return nil, err
@@ -136,7 +135,7 @@ func (repo *DtsTcInstanceMigrateInfosRepositoryImpl) GetMigrateInfos(instanceId 
 	return repo.client.DescribeMigrateJobs(req)
 }
 
-func NewDtsTcInstanceMigrateInfosRepository(cred selfcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (DtsTcInstanceMigrateInfosRepository, error) {
+func NewDtsTcInstanceMigrateInfosRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (DtsTcInstanceMigrateInfosRepository, error) {
 	cli, err := client.NewDTSClient(cred, c)
 	if err != nil {
 		return nil, err
@@ -148,7 +147,7 @@ func NewDtsTcInstanceMigrateInfosRepository(cred selfcommon.CredentialIface, c *
 	return repo, nil
 }
 
-func NewDTSTcInstanceRepository(cred selfcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewDTSTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewDTSClient(cred, c)
 	if err != nil {
 		return

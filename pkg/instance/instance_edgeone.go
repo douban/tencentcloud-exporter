@@ -5,26 +5,26 @@ import (
 
 	"reflect"
 
-	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dc/v20180410"
+	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/teo/v20220901"
 )
 
-type DcTcInstance struct {
+type EdgeoneTcInstance struct {
 	baseTcInstance
-	meta *sdk.DirectConnect
+	meta *sdk.AccelerationDomain
 }
 
-func (ins *DcTcInstance) GetMeta() interface{} {
+func (ins *EdgeoneTcInstance) GetMeta() interface{} {
 	return ins.meta
 }
 
-func NewDcTcInstance(instanceId string, meta *sdk.DirectConnect) (ins *DcTcInstance, err error) {
+func NewEdgeoneTcInstance(instanceId string, meta *sdk.AccelerationDomain) (ins *EdgeoneTcInstance, err error) {
 	if instanceId == "" {
 		return nil, fmt.Errorf("instanceId is empty ")
 	}
 	if meta == nil {
 		return nil, fmt.Errorf("meta is empty ")
 	}
-	ins = &DcTcInstance{
+	ins = &EdgeoneTcInstance{
 		baseTcInstance: baseTcInstance{
 			instanceId: instanceId,
 			value:      reflect.ValueOf(*meta),

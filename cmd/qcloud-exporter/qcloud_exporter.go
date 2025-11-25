@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/prometheus/client_golang/prometheus/collectors"
 	"net/http"
 	"os"
 	"time"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/cachedtransactiongather"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+	"github.com/tencentyun/tencentcloud-exporter/pkg/cachedtransactiongather"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -112,24 +112,9 @@ func main() {
 	}
 
 	cred := &common.Credential{}
-	if tencentConfig.Credential.Role != "" {
-		var err error
-		cred, err = common.NewCredential(tencentConfig.Credential.Role)
-		if err != nil {
-			level.Error(logger).Log("msg", "init cred error", "err", err)
-			panic(err)
-		}
-		go func() {
-			err := cred.Refresh()
-			if err != nil {
-				level.Error(logger).Log("msg", "cred refresh error", "err", err)
-				panic(err)
-			}
-		}()
-	} else {
-		cred.SecretId = tencentConfig.Credential.AccessKey
-		cred.SecretKey = tencentConfig.Credential.SecretKey
-	}
+
+	cred.SecretId = tencentConfig.Credential.AccessKey
+	cred.SecretKey = tencentConfig.Credential.SecretKey
 
 	handler, err := newHandler(cred, tencentConfig, *enableExporterMetrics, *maxRequests, logger)
 	if err != nil {
