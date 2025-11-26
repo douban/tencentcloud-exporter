@@ -12,27 +12,27 @@ import (
 )
 
 const (
-	CdnNamespace     = "QCE/CDN"
-	CdnInstanceidKey = "domain"
+	EdgeOneL7Namespace   = "QCE/EDGEONE_L7"
+	EdgeOneInstanceidKey = "domain"
 )
 
 func init() {
-	registerHandler(CdnNamespace, defaultHandlerEnabled, NewCdnHandler)
+	registerHandler(EdgeOneL7Namespace, defaultHandlerEnabled, NewEdgeOneHandler)
 }
 
-type cdnHandler struct {
+type edgeoneHandler struct {
 	baseProductHandler
 }
 
-func (h *cdnHandler) IsMetricMetaValid(meta *metric.TcmMeta) bool {
+func (h *edgeoneHandler) IsMetricMetaValid(meta *metric.TcmMeta) bool {
 	return true
 }
 
-func (h *cdnHandler) GetNamespace() string {
-	return CdnNamespace
+func (h *edgeoneHandler) GetNamespace() string {
+	return EdgeOneL7Namespace
 }
 
-func (h *cdnHandler) IsMetricValid(m *metric.TcmMetric) bool {
+func (h *edgeoneHandler) IsMetricValid(m *metric.TcmMetric) bool {
 	_, ok := excludeMetricName[m.Meta.MetricName]
 	if ok {
 		return false
@@ -47,7 +47,7 @@ func (h *cdnHandler) IsMetricValid(m *metric.TcmMetric) bool {
 	return true
 }
 
-func (h *cdnHandler) GetSeries(m *metric.TcmMetric) (slist []*metric.TcmSeries, err error) {
+func (h *edgeoneHandler) GetSeries(m *metric.TcmMetric) (slist []*metric.TcmSeries, err error) {
 	if m.Conf.IsIncludeOnlyInstance() {
 		return h.GetSeriesByOnly(m)
 	}
@@ -62,7 +62,8 @@ func (h *cdnHandler) GetSeries(m *metric.TcmMetric) (slist []*metric.TcmSeries, 
 
 	return nil, fmt.Errorf("must config all_instances or only_include_instances or custom_query_dimensions")
 }
-func (h *cdnHandler) GetSeriesByOnly(m *metric.TcmMetric) ([]*metric.TcmSeries, error) {
+
+func (h *edgeoneHandler) GetSeriesByOnly(m *metric.TcmMetric) ([]*metric.TcmSeries, error) {
 	var slist []*metric.TcmSeries
 	for _, insId := range m.Conf.OnlyIncludeInstances {
 		ins, err := h.collector.InstanceRepo.Get(insId)
@@ -70,15 +71,19 @@ func (h *cdnHandler) GetSeriesByOnly(m *metric.TcmMetric) ([]*metric.TcmSeries, 
 			level.Error(h.logger).Log("msg", "Instance not found", "id", insId)
 			continue
 		}
-		projectId, err := ins.GetFieldValueByName("ProjectId")
+		zoneId, err := ins.GetFieldValueByName("ZoneId")
+		if err != nil {
+			level.Error(h.logger).Log("msg", "ZoneId not found")
+			continue
+		}
 		domain, err := ins.GetFieldValueByName("Domain")
 		if err != nil {
-			level.Error(h.logger).Log("msg", "projectId not found")
+			level.Error(h.logger).Log("msg", "domain not found")
 			continue
 		}
 		ql := map[string]string{
-			"domain":    domain,
-			"projectId": projectId,
+			"domain": domain,
+			"zoneid": zoneId,
 		}
 		s, err := metric.NewTcmSeries(m, ql, ins)
 		if err != nil {
@@ -91,7 +96,7 @@ func (h *cdnHandler) GetSeriesByOnly(m *metric.TcmMetric) ([]*metric.TcmSeries, 
 	return slist, nil
 }
 
-func (h *cdnHandler) GetSeriesByAll(m *metric.TcmMetric) ([]*metric.TcmSeries, error) {
+func (h *edgeoneHandler) GetSeriesByAll(m *metric.TcmMetric) ([]*metric.TcmSeries, error) {
 	var slist []*metric.TcmSeries
 	insList, err := h.collector.InstanceRepo.ListByFilters(m.Conf.InstanceFilters)
 	if err != nil {
@@ -101,15 +106,15 @@ func (h *cdnHandler) GetSeriesByAll(m *metric.TcmMetric) ([]*metric.TcmSeries, e
 		if len(m.Conf.ExcludeInstances) != 0 && util.IsStrInList(m.Conf.ExcludeInstances, ins.GetInstanceId()) {
 			continue
 		}
-		projectId, err := ins.GetFieldValueByName("ProjectId")
+		zoneId, err := ins.GetFieldValueByName("ZoneId")
 		domain, err := ins.GetFieldValueByName("Domain")
 		if err != nil {
-			level.Error(h.logger).Log("msg", "projectId not found")
+			level.Error(h.logger).Log("msg", "zoneId or domain not found")
 			continue
 		}
 		ql := map[string]string{
-			"domain":    domain,
-			"projectId": projectId,
+			"domain": domain,
+			"zoneId": zoneId,
 		}
 		s, err := metric.NewTcmSeries(m, ql, ins)
 		if err != nil {
@@ -122,7 +127,7 @@ func (h *cdnHandler) GetSeriesByAll(m *metric.TcmMetric) ([]*metric.TcmSeries, e
 	return slist, nil
 }
 
-func (h *cdnHandler) GetSeriesByCustom(m *metric.TcmMetric) ([]*metric.TcmSeries, error) {
+func (h *edgeoneHandler) GetSeriesByCustom(m *metric.TcmMetric) ([]*metric.TcmSeries, error) {
 	var slist []*metric.TcmSeries
 	for _, ql := range m.Conf.CustomQueryDimensions {
 		if !h.checkMonitorQueryKeys(m, ql) {
@@ -140,7 +145,7 @@ func (h *cdnHandler) GetSeriesByCustom(m *metric.TcmMetric) ([]*metric.TcmSeries
 	return slist, nil
 }
 
-func (h *cdnHandler) checkMonitorQueryKeys(m *metric.TcmMetric, ql map[string]string) bool {
+func (h *edgeoneHandler) checkMonitorQueryKeys(m *metric.TcmMetric, ql map[string]string) bool {
 	for k := range ql {
 		if !util.IsStrInList(m.Meta.SupportDimensions, k) {
 			level.Error(h.logger).Log("msg", fmt.Sprintf("not found %s in supportQueryDimensions", k),
@@ -151,8 +156,8 @@ func (h *cdnHandler) checkMonitorQueryKeys(m *metric.TcmMetric, ql map[string]st
 	return true
 }
 
-func NewCdnHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
-	handler = &cdnHandler{
+func NewEdgeOneHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+	handler = &edgeoneHandler{
 		baseProductHandler{
 			collector: c,
 			logger:    logger,

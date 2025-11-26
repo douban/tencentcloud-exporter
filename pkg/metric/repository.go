@@ -6,9 +6,8 @@ import (
 	"strings"
 	"time"
 
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
-
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -37,7 +36,7 @@ type TcmMetricRepository interface {
 }
 
 type TcmMetricRepositoryImpl struct {
-	credential               common.CredentialIface
+	credential               apiCommon.CredentialIface
 	monitorClient            *monitor.Client
 	monitorClientInGuangzhou *monitor.Client
 	monitorClientInSinapore  *monitor.Client
@@ -299,7 +298,7 @@ func (repo *TcmMetricRepositoryImpl) buildSamples(
 	return samples, ql, nil
 }
 
-func NewTcmMetricRepository(cred common.CredentialIface, conf *config.TencentConfig, logger log.Logger) (repo TcmMetricRepository, err error) {
+func NewTcmMetricRepository(cred apiCommon.CredentialIface, conf *config.TencentConfig, logger log.Logger) (repo TcmMetricRepository, err error) {
 	monitorClient, err := client.NewMonitorClient(cred, conf, conf.Credential.Region)
 	if err != nil {
 		return

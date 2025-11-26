@@ -3,12 +3,13 @@ package instance
 import (
 	"fmt"
 
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cdn/v20180606"
 
 	"github.com/tencentyun/tencentcloud-exporter/pkg/client"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 )
 
@@ -81,7 +82,7 @@ getMoreInstances:
 	return
 }
 
-func NewCdnTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewCdnTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewCdnClient(cred, c)
 	if err != nil {
 		return

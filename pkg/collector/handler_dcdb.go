@@ -2,7 +2,8 @@ package collector
 
 import (
 	"github.com/go-kit/log"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 )
 
@@ -31,7 +32,7 @@ func (h *dcdbHandler) IsMetricValid(m *metric.TcmMetric) bool {
 	return true
 }
 
-func NewDcdbHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewDcdbHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	handler = &dcdbHandler{
 		baseProductHandler{
 			monitorQueryKey: DcdbInstanceidKey,

@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	sdk "github.com/tencentyun/cos-go-sdk-v5"
 
 	"github.com/tencentyun/tencentcloud-exporter/pkg/client"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 )
 
@@ -84,7 +85,7 @@ func (repo *CosTcInstanceRepository) ListByFilters(filters map[string]string) (i
 	return
 }
 
-func NewCosTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewCosTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewCosClient(cred, c)
 	if err != nil {
 		return

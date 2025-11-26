@@ -2,6 +2,7 @@ package instance
 
 import (
 	"fmt"
+
 	"reflect"
 
 	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dts/v20180330"
@@ -9,7 +10,7 @@ import (
 
 type DtsTcInstance struct {
 	baseTcInstance
-	meta            *sdk.SubscribeInfo
+	meta *sdk.SubscribeInfo
 }
 
 func (ins *DtsTcInstance) GetMeta() interface{} {

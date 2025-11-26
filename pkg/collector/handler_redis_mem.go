@@ -2,12 +2,14 @@ package collector
 
 import (
 	"fmt"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"strings"
 	"time"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/instance"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
@@ -210,7 +212,7 @@ func (h *redisMemHandler) getNodeSeries(m *metric.TcmMetric, ins instance.TcInst
 	return series, nil
 }
 
-func NewRedisMemHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (ProductHandler, error) {
+func NewRedisMemHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (ProductHandler, error) {
 	nodeRepo, err := instance.NewRedisTcInstanceNodeRepository(cred, c.Conf, logger)
 	if err != nil {
 		return nil, err

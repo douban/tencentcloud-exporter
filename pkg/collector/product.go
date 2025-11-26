@@ -3,12 +3,14 @@ package collector
 import (
 	"context"
 	"fmt"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/constant"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	"github.com/tencentyun/tencentcloud-exporter/pkg/constant"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -338,7 +340,7 @@ func (r *TcProductCollectorReloader) reloadMetricsByProductConf() error {
 }
 
 // 创建新的TcProductCollector, 每个产品一个
-func NewTcProductCollector(namespace string, metricRepo metric.TcmMetricRepository, cred common.CredentialIface,
+func NewTcProductCollector(namespace string, metricRepo metric.TcmMetricRepository, cred apiCommon.CredentialIface,
 	conf *config.TencentConfig, pconf *config.TencentProduct, logger log.Logger) (*TcProductCollector, error) {
 	factory, exists := handlerFactoryMap[namespace]
 	if !exists {

@@ -3,7 +3,8 @@ package collector
 import (
 	"fmt"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
 
 	"github.com/go-kit/log"
@@ -12,7 +13,7 @@ import (
 )
 
 var (
-	handlerFactoryMap = make(map[string]func(common.CredentialIface, *TcProductCollector, log.Logger) (ProductHandler, error))
+	handlerFactoryMap = make(map[string]func(apiCommon.CredentialIface, *TcProductCollector, log.Logger) (ProductHandler, error))
 )
 
 // 每个产品的指标处理逻辑
@@ -32,7 +33,7 @@ type ProductHandler interface {
 }
 
 // 将对应的产品handler注册到Factory中
-func registerHandler(namespace string, _ bool, factory func(common.CredentialIface, *TcProductCollector, log.Logger) (ProductHandler, error)) {
+func registerHandler(namespace string, _ bool, factory func(apiCommon.CredentialIface, *TcProductCollector, log.Logger) (ProductHandler, error)) {
 	handlerFactoryMap[namespace] = factory
 }
 

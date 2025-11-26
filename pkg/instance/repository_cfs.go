@@ -2,7 +2,8 @@ package instance
 
 import (
 	"fmt"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -16,7 +17,7 @@ func init() {
 }
 
 type CfsTcInstanceRepository struct {
-	credential common.CredentialIface
+	credential apiCommon.CredentialIface
 	client     *sdk.Client
 	logger     log.Logger
 }
@@ -68,7 +69,7 @@ func (repo *CfsTcInstanceRepository) ListByFilters(filters map[string]string) (i
 	return
 }
 
-func NewCfsTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewCfsTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewCfsClient(cred, c)
 	if err != nil {
 		return
@@ -101,7 +102,7 @@ func (repo *CfsSnapshotsRepositoryImpl) GetCfsSnapshotsInfo(instanceId string) (
 	return repo.client.DescribeCfsSnapshots(req)
 }
 
-func NewCfsSnapshotsRepositoryRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (CfsSnapshotsRepository, error) {
+func NewCfsSnapshotsRepositoryRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (CfsSnapshotsRepository, error) {
 	cli, err := client.NewCfsClient(cred, c)
 	if err != nil {
 		return nil, err

@@ -2,8 +2,10 @@ package instance
 
 import (
 	"fmt"
-	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/redis/v20180412"
+
 	"reflect"
+
+	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/redis/v20180412"
 )
 
 type RedisTcInstance struct {

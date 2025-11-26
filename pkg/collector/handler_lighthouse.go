@@ -4,7 +4,8 @@ import (
 	"strings"
 
 	"github.com/go-kit/log"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
 )
@@ -48,7 +49,7 @@ func (h *lighthouseHandler) GetSeries(m *metric.TcmMetric) (slist []*metric.TcmS
 	return h.baseProductHandler.GetSeries(m)
 }
 
-func NewLighthouseHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewLighthouseHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	handler = &lighthouseHandler{
 		baseProductHandler{
 			monitorQueryKey: LighthouseInstanceIDKey,

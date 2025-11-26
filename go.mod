@@ -16,7 +16,7 @@ require (
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ckafka v1.0.334
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/clb v1.0.334
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cmq v1.0.334
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.750
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.3.2
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cvm v1.0.334
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cynosdb v1.0.413
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dc v1.0.334
@@ -33,6 +33,7 @@ require (
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/redis v1.0.334
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sqlserver v1.0.334
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tdmq v1.0.413
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/teo v1.3.1
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tse v1.0.430
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/vpc v1.0.334
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/waf v1.0.576

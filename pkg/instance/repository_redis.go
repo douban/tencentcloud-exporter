@@ -3,8 +3,6 @@ package instance
 import (
 	"fmt"
 
-	mycommon "github.com/tencentyun/tencentcloud-exporter/pkg/common"
-
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
@@ -21,12 +19,12 @@ func init() {
 }
 
 type RedisTcInstanceRepository struct {
-	credential mycommon.CredentialIface
+	credential common.CredentialIface
 	client     *sdk.Client
 	logger     log.Logger
 }
 
-func NewRedisTcInstanceRepository(cred mycommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewRedisTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewRedisClient(cred, c)
 	if err != nil {
 		return
@@ -104,7 +102,7 @@ type RedisTcInstanceNodeRepository interface {
 }
 
 type RedisTcInstanceNodeRepositoryImpl struct {
-	credential mycommon.CredentialIface
+	credential common.CredentialIface
 	client     *sdk.Client
 	logger     log.Logger
 }
@@ -115,7 +113,7 @@ func (repo *RedisTcInstanceNodeRepositoryImpl) GetNodeInfo(instanceId string) (*
 	return repo.client.DescribeInstanceNodeInfo(req)
 }
 
-func NewRedisTcInstanceNodeRepository(cred mycommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (RedisTcInstanceNodeRepository, error) {
+func NewRedisTcInstanceNodeRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (RedisTcInstanceNodeRepository, error) {
 	cli, err := client.NewRedisClient(cred, c)
 	if err != nil {
 		return nil, err

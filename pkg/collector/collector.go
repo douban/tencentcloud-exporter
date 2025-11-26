@@ -3,10 +3,11 @@ package collector
 import (
 	"context"
 	"fmt"
+
 	"sync"
 	"time"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -85,7 +86,7 @@ func collect(name string, c *TcProductCollector, ch chan<- prometheus.Metric, lo
 	ch <- prometheus.MustNewConstMetric(scrapeSuccessDesc, prometheus.GaugeValue, success, name)
 }
 
-func NewTcMonitorCollector(cred common.CredentialIface, conf *config.TencentConfig, logger log.Logger) (*TcMonitorCollector, error) {
+func NewTcMonitorCollector(cred apiCommon.CredentialIface, conf *config.TencentConfig, logger log.Logger) (*TcMonitorCollector, error) {
 	collectors := make(map[string]*TcProductCollector)
 	reloaders := make(map[string]*TcProductCollectorReloader)
 

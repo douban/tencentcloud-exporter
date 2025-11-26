@@ -3,14 +3,14 @@ package instance
 import (
 	"fmt"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 
 	"github.com/go-kit/log"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 )
 
 var (
-	factoryMap = make(map[string]func(common.CredentialIface, *config.TencentConfig, log.Logger) (TcInstanceRepository, error))
+	factoryMap = make(map[string]func(apiCommon.CredentialIface, *config.TencentConfig, log.Logger) (TcInstanceRepository, error))
 )
 
 // 每个产品的实例对象的Repository
@@ -25,7 +25,7 @@ type TcInstanceRepository interface {
 	ListByFilters(filters map[string]string) ([]TcInstance, error)
 }
 
-func NewTcInstanceRepository(namespace string, cred common.CredentialIface, conf *config.TencentConfig, logger log.Logger) (TcInstanceRepository, error) {
+func NewTcInstanceRepository(namespace string, cred apiCommon.CredentialIface, conf *config.TencentConfig, logger log.Logger) (TcInstanceRepository, error) {
 	f, exists := factoryMap[namespace]
 	if !exists {
 		return nil, fmt.Errorf("Namespace not support, namespace=%s ", namespace)
@@ -34,6 +34,6 @@ func NewTcInstanceRepository(namespace string, cred common.CredentialIface, conf
 }
 
 // 将TcInstanceRepository注册到factoryMap中
-func registerRepository(namespace string, factory func(common.CredentialIface, *config.TencentConfig, log.Logger) (TcInstanceRepository, error)) {
+func registerRepository(namespace string, factory func(apiCommon.CredentialIface, *config.TencentConfig, log.Logger) (TcInstanceRepository, error)) {
 	factoryMap[namespace] = factory
 }

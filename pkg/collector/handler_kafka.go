@@ -2,7 +2,8 @@ package collector
 
 import (
 	"github.com/go-kit/log"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 )
 
@@ -38,7 +39,7 @@ func (h *kafkaHandler) IsMetricValid(m *metric.TcmMetric) bool {
 	}
 	return true
 }
-func NewKafkaHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewKafkaHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	handler = &kafkaHandler{
 		baseProductHandler{
 			monitorQueryKey: KafkaInstanceIDKey,

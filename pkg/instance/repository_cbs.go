@@ -3,12 +3,13 @@ package instance
 import (
 	"fmt"
 
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cbs/v20170312"
 	cvm "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cvm/v20170312"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/client"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 )
 
@@ -17,7 +18,7 @@ func init() {
 }
 
 type CbsTcInstanceRepository struct {
-	credential common.CredentialIface
+	credential apiCommon.CredentialIface
 	c          *config.TencentConfig
 	client     *sdk.Client
 	logger     log.Logger
@@ -82,7 +83,7 @@ getMoreInstances:
 	return
 }
 
-func NewCbsTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewCbsTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewCbsClient(cred, c)
 	if err != nil {
 		return
@@ -127,7 +128,7 @@ func (repo *CbsTcInstanceInfosRepositoryImpl) GetInstanceInfosInfoByFilters(ids 
 
 	req.Offset = &offset
 	req.Limit = &limit
-	if ids!=nil{
+	if ids != nil {
 		for _, id := range ids {
 			req.InstanceIds = []*string{&id}
 		}
@@ -135,7 +136,7 @@ func (repo *CbsTcInstanceInfosRepositoryImpl) GetInstanceInfosInfoByFilters(ids 
 	return repo.client.DescribeInstances(req)
 }
 
-func NewCbsTcInstanceInfosRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (CbsTcInstanceInfosRepository, error) {
+func NewCbsTcInstanceInfosRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (CbsTcInstanceInfosRepository, error) {
 	cli, err := client.NewCvmClient(cred, c)
 	if err != nil {
 		return nil, err

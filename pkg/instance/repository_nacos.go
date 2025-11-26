@@ -3,11 +3,10 @@ package instance
 import (
 	"fmt"
 
-	pkgcommon "github.com/tencentyun/tencentcloud-exporter/pkg/common"
-
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tse/v20201207"
 
 	"github.com/tencentyun/tencentcloud-exporter/pkg/client"
@@ -101,7 +100,7 @@ func (repo *NacosTcInstancePodRepositoryImpl) GetNacosPodInfo(instanceId string)
 	req.InstanceId = common.StringPtr(instanceId)
 	return repo.client.DescribeNacosReplicas(req)
 }
-func NewNacosTcInstancePodRepository(cred pkgcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (NacosTcInstancePodRepository, error) {
+func NewNacosTcInstancePodRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (NacosTcInstancePodRepository, error) {
 	cli, err := client.NewTseClient(cred, c)
 	if err != nil {
 		return nil, err
@@ -128,7 +127,7 @@ func (repo *NacosTcInstanceInterfaceRepositoryImpl) GetNacosInterfaceInfo(instan
 	req.InstanceId = common.StringPtr(instanceId)
 	return repo.client.DescribeNacosServerInterfaces(req)
 }
-func NewNacosTcInstanceInterfaceRepository(cred pkgcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (NacosTcInstanceInterfaceRepository, error) {
+func NewNacosTcInstanceInterfaceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (NacosTcInstanceInterfaceRepository, error) {
 	cli, err := client.NewTseClient(cred, c)
 	if err != nil {
 		return nil, err
@@ -140,7 +139,7 @@ func NewNacosTcInstanceInterfaceRepository(cred pkgcommon.CredentialIface, c *co
 	return repo, nil
 }
 
-func NewNaocsTcInstanceRepository(cred pkgcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewNaocsTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewTseClient(cred, c)
 	if err != nil {
 		return

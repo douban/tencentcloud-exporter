@@ -2,8 +2,10 @@ package instance
 
 import (
 	"fmt"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
+
 	"reflect"
+
+	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
 )
 
 // 每个产品的实例对象, 可用于配置导出指标的额外label填充, 根据字段名获取值

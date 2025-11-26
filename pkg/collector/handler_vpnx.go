@@ -2,7 +2,8 @@ package collector
 
 import (
 	"github.com/go-kit/log"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 )
 
@@ -42,7 +43,7 @@ func (h *VpnxHandler) IsMetricValid(m *metric.TcmMetric) bool {
 	return true
 }
 
-func NewVpnxHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewVpnxHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	handler = &VpnxHandler{
 		baseProductHandler: baseProductHandler{
 			monitorQueryKey: VpnxInstanceidKey,

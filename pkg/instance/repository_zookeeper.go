@@ -9,7 +9,6 @@ import (
 	sdk "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tse/v20201207"
 
 	"github.com/tencentyun/tencentcloud-exporter/pkg/client"
-	pkgcommon "github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 )
 
@@ -100,7 +99,7 @@ func (repo *ZookeeperTcInstancePodRepositoryImpl) GetZookeeperPodInfo(instanceId
 	req.InstanceId = common.StringPtr(instanceId)
 	return repo.client.DescribeZookeeperReplicas(req)
 }
-func NewZookeeperTcInstancePodRepository(cred pkgcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (ZookeeperTcInstancePodRepository, error) {
+func NewZookeeperTcInstancePodRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (ZookeeperTcInstancePodRepository, error) {
 	cli, err := client.NewTseClient(cred, c)
 	if err != nil {
 		return nil, err
@@ -127,7 +126,7 @@ func (repo *ZookeeperTcInstanceInterfaceRepositoryImpl) GetZookeeperInterfaceInf
 	req.InstanceId = common.StringPtr(instanceId)
 	return repo.client.DescribeZookeeperServerInterfaces(req)
 }
-func NewZookeeperTcInstanceInterfaceRepository(cred pkgcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (ZookeeperTcInstanceInterfaceRepository, error) {
+func NewZookeeperTcInstanceInterfaceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (ZookeeperTcInstanceInterfaceRepository, error) {
 	cli, err := client.NewTseClient(cred, c)
 	if err != nil {
 		return nil, err
@@ -139,7 +138,7 @@ func NewZookeeperTcInstanceInterfaceRepository(cred pkgcommon.CredentialIface, c
 	return repo, nil
 }
 
-func NewZookeeperTcInstanceRepository(cred pkgcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewZookeeperTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewTseClient(cred, c)
 	if err != nil {
 		return

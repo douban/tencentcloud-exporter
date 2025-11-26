@@ -3,7 +3,7 @@ package instance
 import (
 	"fmt"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -19,7 +19,7 @@ func init() {
 }
 
 type PGTcInstanceRepository struct {
-	credential common.CredentialIface
+	credential apiCommon.CredentialIface
 	client     *sdk.Client
 	logger     log.Logger
 }
@@ -86,7 +86,7 @@ getMoreInstances:
 	return
 }
 
-func NewPGTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewPGTcInstanceRepository(cred apiCommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewPGClient(cred, c)
 	if err != nil {
 		return

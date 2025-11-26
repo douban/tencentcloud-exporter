@@ -3,9 +3,10 @@ package collector
 import (
 	"fmt"
 
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
 )
@@ -101,7 +102,7 @@ func (h *cmqHandler) GetSeriesByAll(m *metric.TcmMetric) ([]*metric.TcmSeries, e
 	return slist, nil
 }
 
-func NewCMQHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewCMQHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	handler = &cmqHandler{
 		baseProductHandler{
 			monitorQueryKey: CMQInstanceIDKey,

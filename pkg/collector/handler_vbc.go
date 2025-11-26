@@ -2,14 +2,17 @@ package collector
 
 import (
 	"fmt"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
+	"time"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/config"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/instance"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
-	"time"
 )
 
 const (
@@ -188,7 +191,7 @@ func (h *VbcHandler) checkMonitorQueryKeys(m *metric.TcmMetric, ql map[string]st
 	return true
 }
 
-func NewVbcHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewVbcHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	dRegionRepo, err := instance.NewVbcTcInstanceDRegionRepository(cred, c.Conf, logger)
 	if err != nil {
 		return nil, err

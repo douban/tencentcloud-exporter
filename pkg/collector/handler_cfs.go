@@ -2,14 +2,17 @@ package collector
 
 import (
 	"fmt"
+
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+
+	"strconv"
+	"time"
+
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/instance"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/util"
-	"strconv"
-	"time"
 )
 
 const (
@@ -165,7 +168,7 @@ func (h *CfsHandler) getCfsSnapshotsSeries(m *metric.TcmMetric, ins instance.TcI
 	return series, nil
 }
 
-func NewCfsHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewCfsHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	cfsSnapshotsRepo, err := instance.NewCfsSnapshotsRepositoryRepository(cred, c.Conf, logger)
 	if err != nil {
 		return nil, err

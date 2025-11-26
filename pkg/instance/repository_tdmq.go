@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
-	selfcommon "github.com/tencentyun/tencentcloud-exporter/pkg/common"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
@@ -113,7 +112,7 @@ func (repo *TdmqTcInstanceRocketMQNameSpacesRepositoryImpl) GetRocketMQNamespace
 	return repo.client.DescribeRocketMQNamespaces(req)
 }
 
-func NewTdmqTcInstanceRocketMQNameSpacesRepository(cred selfcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (TdmqTcInstanceRocketMQNameSpacesRepository, error) {
+func NewTdmqTcInstanceRocketMQNameSpacesRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (TdmqTcInstanceRocketMQNameSpacesRepository, error) {
 	cli, err := client.NewTDMQClient(cred, c)
 	if err != nil {
 		return nil, err
@@ -146,7 +145,7 @@ func (repo *TdmqTcInstanceRocketMQTopicsRepositoryImpl) GetRocketMQTopicsInfo(in
 	return repo.client.DescribeRocketMQTopics(req)
 }
 
-func NewTdmqTcInstanceRocketMQTopicsRepository(cred selfcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (TdmqTcInstanceRocketMQTopicsRepository, error) {
+func NewTdmqTcInstanceRocketMQTopicsRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (TdmqTcInstanceRocketMQTopicsRepository, error) {
 	cli, err := client.NewTDMQClient(cred, c)
 	if err != nil {
 		return nil, err
@@ -158,7 +157,7 @@ func NewTdmqTcInstanceRocketMQTopicsRepository(cred selfcommon.CredentialIface, 
 	return repo, nil
 }
 
-func NewTdmqTcInstanceRepository(cred selfcommon.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
+func NewTdmqTcInstanceRepository(cred common.CredentialIface, c *config.TencentConfig, logger log.Logger) (repo TcInstanceRepository, err error) {
 	cli, err := client.NewTDMQClient(cred, c)
 	if err != nil {
 		return

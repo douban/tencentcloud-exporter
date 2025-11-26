@@ -70,6 +70,7 @@ var (
 		"waf":           "QCE/WAF",
 		"cfs":           "QCE/CFS",
 		"dsa":           "QCE/DSA",
+		"edgeone_l7":    "QCE/EDGEONE_L7",
 	}
 
 	SupportStatisticsTypes = map[string]bool{

@@ -2,8 +2,8 @@ package collector
 
 import (
 	"github.com/go-kit/log"
+	apiCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 
-	"github.com/tencentyun/tencentcloud-exporter/pkg/common"
 	"github.com/tencentyun/tencentcloud-exporter/pkg/metric"
 )
 
@@ -32,7 +32,7 @@ func (h *sqlServerHandler) IsMetricValid(m *metric.TcmMetric) bool {
 	return true
 }
 
-func NewSqlServerHandler(cred common.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
+func NewSqlServerHandler(cred apiCommon.CredentialIface, c *TcProductCollector, logger log.Logger) (handler ProductHandler, err error) {
 	handler = &sqlServerHandler{
 		baseProductHandler{
 			monitorQueryKey: SqlServerInstanceidKey,
